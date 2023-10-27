@@ -16,7 +16,7 @@ export const authOptions: NextAuthOptions = {
           async authorize(credentials, req) {
             const {email, password } = credentials as any
             const data = {email,password}
-            const res = await axios.post(`${process.env.BACKEND_URL}/v1/auth/login`, data)
+            const res = await axios.post(`${process.env.BACKEND_URL}/auth/login`, data)
             const user = await res.data.data.user
             // If no error and we have user data, return it
             if (res.statusText === "OK" && user) {
