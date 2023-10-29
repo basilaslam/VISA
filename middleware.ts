@@ -29,6 +29,10 @@ export function middleware(request: NextRequest) {
     if(token && !isAdminPublicPath && role === "ADMIN"){
         return NextResponse.redirect(new URL('/admin/dashboard', request.nextUrl))
     }
+
+    if(path.includes('/admin/') && role !== "ADMIN" && !token){
+        return NextResponse.redirect(new URL('/login', request.nextUrl))
+    }
     
     
 }
