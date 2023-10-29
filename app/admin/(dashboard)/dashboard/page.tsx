@@ -1,11 +1,6 @@
 "use client"
-import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import axios from "axios";
-import Image from "next/image"
 import { useEffect, useState } from "react"
-import { Circle } from "lucide-react";
-import { useReactTable } from '@tanstack/react-table'
-import form from '@/public/form.svg'
 import {  useRouter } from "next/navigation"
 import { PopulatedApplication, PopulatedApplicationApiResponse } from "@/types/application";
   import {

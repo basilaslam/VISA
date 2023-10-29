@@ -1,7 +1,6 @@
 "use client"
 import { Button } from "@/components/ui/button"
 import { useToast } from "@/components/ui/use-toast"
-import { Document, Page, pdfjs } from 'react-pdf'
 import UploadButton from "@/components/upload"
 import { IApplication } from "@/models/application.model"
 import { SingleApplicationApiResponse } from "@/types/application"
@@ -9,10 +8,7 @@ import axios from "axios"
 import { File } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { FC, FormEvent, useState, useEffect } from "react"
-import "react-pdf/dist/esm/Page/AnnotationLayer.css";
-import "react-pdf/dist/esm/Page/TextLayer.css";
 import FormFile from "@/components/fileCard"
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 
 interface pageProps {
@@ -29,7 +25,9 @@ export const Application:FC<pageProps> = ({params}) =>{
     const { toast } = useToast()
     const router = useRouter()
       useEffect(()=>{
-        getDetails()
+        (()=>{
+          getDetails()
+        })()
       },[])
 
       
