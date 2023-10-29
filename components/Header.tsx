@@ -7,7 +7,7 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const [isMounted, setIsMounted] = useState(false);
 
-  const { isLoggedIn, logout } = useLoggedIn()
+  const { isLoggedIn, logout, role } = useLoggedIn()
 
   useEffect(() => {
     setIsMounted(true);
@@ -62,7 +62,7 @@ const Header = () => {
         </div>)}
        {isLoggedIn&&(<ul className="hidden md:flex items-center gap-6 text-sm">
           <li>
-            <a className="text-gray-500 transition hover:text-gray-500/75" href="/dashboard">
+            <a className="text-gray-500 transition hover:text-gray-500/75" href={role === "ADMIN"? "/admin/dashboard" : "/dashboard"}>
               Dashboard
             </a>
           </li>
@@ -127,7 +127,7 @@ const Header = () => {
             <li>
             <a
             className="text-gray-500 transition hover:text-gray-500/75"
-            href="/dashboard"
+            href={role === "ADMIN"? "/admin/dashboard" : "/dashboard"}
           >
             Dashboard
           </a>
