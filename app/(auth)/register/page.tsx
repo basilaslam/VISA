@@ -1,7 +1,7 @@
 "use client"
-import axios from "@/lib/axios";
 import { FormEvent, useState } from "react"
 import  { useRouter } from 'next/navigation'
+import axios from "axios";
 const Register = () => {
     const [formData, setFormData] = useState({
         email: "",
@@ -13,11 +13,9 @@ const Register = () => {
 
     const handleSubmit = async (e:FormEvent) => {
         e.preventDefault();
-
-    
         // Now you can send the form data to your server for registration
         try {
-          const response = await axios.post('/auth/signup', formData);
+          const response = await axios.post('/api/auth/register', formData);
     
           if (response.data) {
             router.push("/login")

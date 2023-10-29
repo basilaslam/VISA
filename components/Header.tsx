@@ -1,11 +1,13 @@
 "use client"
 import { useEffect, useState } from "react"
-import { signIn, signOut, useSession } from "next-auth/react"
 import { Button } from "./ui/button"
+import { IUser } from "@/models/user.model"
+import { useLoggedIn } from "@/lib/hooks/AuthStatus"
 const Header = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const [isMounted, setIsMounted] = useState(false);
-  const {data: session} = useSession()
+
+  const { isLoggedIn, logout } = useLoggedIn()
 
   useEffect(() => {
     setIsMounted(true);
@@ -16,18 +18,18 @@ const Header = () => {
   }
   
     return(
-        <header className="bg-white dark:bg-gray-900">
+        <header className="bg-white dark:bg-gray-900 fixed top-0 w-full shadow-sm z-50">
   <div
     className="mx-auto flex h-16 max-w-screen-xl items-center gap-8 px-4 sm:px-6 lg:px-8"
   >
     <a className="block text-red-600" href="/">
       <span className="sr-only">Home</span>
-      <h1 className=" text-3xl font-bold">Pages<strong className="dark:text-white text-black">.</strong></h1>
+      <h1 className=" text-3xl font-bold">Visa<strong className="dark:text-white text-black">.</strong></h1>
     </a>
 
     <div className="flex flex-1 items-center justify-end md:justify-between">
       <nav aria-label="Global" className="hidden md:block">
-        {!session?.user._id&&<ul className="flex items-center gap-6 text-sm">
+        {!isLoggedIn&&<ul className="flex items-center gap-6 text-sm">
           <li>
             <a className="text-gray-500 transition hover:text-gray-500/75" href="/">
               Pricing
@@ -43,7 +45,7 @@ const Header = () => {
       </nav>
 
       <div className="flex items-center gap-4">
-       {!session?.user._id&&(<div className="sm:flex sm:gap-4">
+       {!isLoggedIn&&(<div className="sm:flex sm:gap-4">
           <a
             className="block rounded-md bg-red-600 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-red-700"
             href="/login"
@@ -58,7 +60,7 @@ const Header = () => {
             Register
           </a>
         </div>)}
-       {session?.user._id&&(<ul className="hidden md:flex items-center gap-6 text-sm">
+       {isLoggedIn&&(<ul className="hidden md:flex items-center gap-6 text-sm">
           <li>
             <a className="text-gray-500 transition hover:text-gray-500/75" href="/dashboard">
               Dashboard
@@ -66,7 +68,7 @@ const Header = () => {
           </li>
 
           <li>
-            <Button variant={"primary"} size={"sm"} className="text-gray-500 transition hover:text-gray-500/75 cursor-pointer" onClick={() => signOut()}>
+            <Button variant={"primary"} size={"sm"} className="text-gray-500 transition hover:text-gray-500/75 cursor-pointer" onClick={() => logout()}>
               Logout
             </Button>
           </li>
@@ -100,7 +102,7 @@ const Header = () => {
   </div>
 
   <nav aria-label="Global" className={`${isOpen ? 'block' : 'hidden' }`} >
-        {!session?.user._id&&<ul className="flex flex-col text-right mr-5 mt-10 gap-6 text-sm">
+        {!isLoggedIn&&<ul className="flex flex-col text-right mr-5 mt-10 gap-6 text-sm">
             <li>
             <a
             className="rounded-md bg-gray-100 px-5 py-2 text-sm font-medium text-red-600 transition hover:text-red-600/75"
@@ -121,7 +123,7 @@ const Header = () => {
             </a>
           </li>
         </ul>}
-        {session?.user._id&&<ul className="flex flex-col text-right mr-5 mt-10 gap-6 text-sm">
+        {isLoggedIn&&<ul className="flex flex-col text-right mr-5 mt-10 gap-6 text-sm md:hidden">
             <li>
             <a
             className="text-gray-500 transition hover:text-gray-500/75"
@@ -131,7 +133,7 @@ const Header = () => {
           </a>
             </li>
           <li>
-            <Button variant={"primary"} size={"sm"} className="text-gray-500 transition hover:text-gray-500/75"onClick={() => signOut()}>
+            <Button variant={"primary"} size={"sm"} className="text-gray-500 transition hover:text-gray-500/75"onClick={() => logout()}>
               Logout
             </Button>
           </li>

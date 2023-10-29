@@ -1,6 +1,5 @@
-import { getServerSession } from "next-auth";
+import { getDataFromToken } from "@/helpers/getDataFromToken";
 import { createUploadthing, type FileRouter } from "uploadthing/next";
-import { authOptions } from "../auth/[...nextauth]/route";
 const f = createUploadthing();
  
  
@@ -11,8 +10,10 @@ export const ourFileRouter = {
     // Set permissions and file types for this FileRoute
     .middleware(async ({ req }) => {
       // This code runs on your server before upload
-        const session = await getServerSession(authOptions)
-        const user = session?.user
+
+       let user = getDataFromToken(req)
+        
+        
       // If you throw, the user will not be able to upload
       if(!user || !user._id) throw new Error("Unauthorized")
       // Whatever is returned here is accessible in onUploadComplete as `metadata`

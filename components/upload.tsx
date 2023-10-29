@@ -1,19 +1,18 @@
 "use client"
-import { useState } from "react"
+import { Dispatch, SetStateAction, useState } from "react"
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import { Cloud,File as FileIcon, Upload } from "lucide-react"
 import Dropzone from "react-dropzone"
 import { Progress } from "./ui/progress"
-import axios from "@/lib/axios"
+import axios from "axios";
 import { useUploadThing } from "@/lib/uploadthing"
 import { useToast } from "./ui/use-toast"
 import { fileToSave } from "@/types/fileToSave"
 import { useRouter } from "next/navigation"
-import { Router } from "next/router"
 
 
-const UploadDropZone = () => {
+const UploadDropZone = ({setPdf, setIsOpen}: {setPdf: Dispatch<SetStateAction<{ url: string; name: string; } | undefined>>, setIsOpen: Dispatch<SetStateAction<boolean>>}) => {
     const [isUploading, setIsUploading] = useState<boolean>(true)
     const [uploadProgress, setUploadProgress] = useState<number>(0)
 
@@ -43,8 +42,6 @@ const UploadDropZone = () => {
             
             try {
                 const form = {
-                     fileName: details.fileName, 
-                     fileKey:details.fileKey, 
                      fileUrl: details.fileUrl 
                     }
                     
@@ -74,7 +71,7 @@ const UploadDropZone = () => {
                 variant: "destructive"
             })
         }
-
+        
         const [fileResponse] = res
         const key = fileResponse.key
 
@@ -87,7 +84,8 @@ const UploadDropZone = () => {
             })
         }
 
-        saveFileDetails(res[0] as fileToSave)   
+        setPdf({url:res[0].url, name:res[0].name})
+        setIsOpen(false)
         clearInterval(progressInterval)
         setUploadProgress(100)
     }}>
@@ -128,7 +126,7 @@ const UploadDropZone = () => {
         )}
     </Dropzone>
 }
-const UploadButton = () => {
+const UploadButton = ({setPdf}: {setPdf: Dispatch<SetStateAction<{ url: string; name: string; } | undefined>>}) => {
     const [isOpen, setIsOpen] = useState<boolean>(false)
 
     return(
@@ -148,7 +146,7 @@ const UploadButton = () => {
             </DialogTrigger>
 
             <DialogContent>
-                <UploadDropZone />
+                <UploadDropZone setPdf={setPdf} setIsOpen={setIsOpen}/>
             </DialogContent>
 
         </Dialog>
