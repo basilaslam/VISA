@@ -1,14 +1,13 @@
 "use client"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import { useToast } from "@/components/ui/use-toast"
 import UploadButton from "@/components/upload"
 import axios from "axios"
 import { File } from "lucide-react"
 import { useRouter } from "next/navigation"
-import { FormEvent, useState } from "react"
+import { FC, FormEvent, useState } from "react"
 
-export const Application = () =>{
+export const Application: FC = () =>{
     const [formData, setFormData] = useState({
         fullname: "",
         date_of_birth: "",
