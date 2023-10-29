@@ -151,7 +151,7 @@ const Header = () => {
           </a>
             </li>
           <li>
-            <Button variant={"primary"} size={"sm"} className="text-gray-500 transition hover:text-gray-500/75"onClick={() => logout()}>
+            <Button variant={"primary"} size={"sm"} className="text-gray-500 transition hover:text-gray-500/75" onClick={handleLogout}>
               Logout
             </Button>
           </li>
