@@ -3,7 +3,7 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import axios from "axios";
 import Image from "next/image"
 import { useEffect, useState } from "react"
-import { Circle } from "lucide-react";
+import { Circle, Loader2 } from "lucide-react";
 import form from '@/public/form.svg'
 import {  useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button";
@@ -24,6 +24,7 @@ export enum StatusEnum {
 const Dashboard = () => {
 
     const [applications, setApplications] = useState<IApplication[]>()
+    const [isLoading, setIsLoading] = useState<boolean>(false)
     const router = useRouter()
     useEffect(()=>{        
         getApplications()
@@ -34,11 +35,14 @@ const Dashboard = () => {
     
     const getApplications = async() => {
         try {
+            setIsLoading(true)
             let res = await axios.get<ApplicationApiResponse>('/api/application')
             
             setApplications(res.data.data)
-            
+            setIsLoading(false)
         } catch (error) {
+            setIsLoading(false)
+
             console.log(error);
         }
         
@@ -51,8 +55,9 @@ const Dashboard = () => {
            <h1 className=" text-lg font-bold my-8">Your Applications</h1>
            <Button onClick={()=> router.push("/dashboard/application")} variant={"primary"} className="my-auto">Apply Now</Button>
            </div>
-           
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 2xl:grid-cols-9 gap-10">
+           {isLoading && <div className="w-full"><Loader2 className="mx-auto w-6 h-6 animate-spin"/> </div>}
+
+        {!isLoading && <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 2xl:grid-cols-9 gap-10">
         {applications&&applications.map((el, index)=>(
                 <Card key={index} className="hover:cursor-pointer hover:border-red-600" onClick={()=> router.push(`/dashboard/application/${el._id}`)}>
                 <CardContent className="p-0 pt-2">
@@ -79,7 +84,7 @@ const Dashboard = () => {
                 </CardFooter>
             </Card>
             ))}
-        </div>
+        </div>}
         </section>
     )
 
