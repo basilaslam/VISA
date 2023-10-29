@@ -18,6 +18,9 @@ export const GET = async () =>{
         {
             httpOnly: true, expires: new Date(0)
         });
+        console.log(response.cookies.get("role"))
+        console.log(response.cookies.get("token"))
+        
         return response;
     }catch (error: any){
         return NextResponse.json(
