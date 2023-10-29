@@ -67,7 +67,7 @@ const Dashboard = () => {
             <TableBody>
                 {applications?.map((el, index) => (
                     
-                <TableRow className="cursor-pointer" onClick={()=> router.push(`/admin/dashboard/application/${el._id}`)}>
+                <TableRow key={index} className="cursor-pointer" onClick={()=> router.push(`/admin/dashboard/application/${el._id}`)}>
                 <TableCell className="font-medium">{el.fullname}</TableCell>
                 <TableCell>{new Date(el.uploadedAt).toLocaleDateString()}</TableCell>
                 <TableCell>Visa Apply</TableCell>
