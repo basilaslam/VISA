@@ -8,12 +8,6 @@ import { useReactTable } from '@tanstack/react-table'
 import form from '@/public/form.svg'
 import {  useRouter } from "next/navigation"
 import { PopulatedApplication, PopulatedApplicationApiResponse } from "@/types/application";
-import {
-    Tooltip,
-    TooltipContent,
-    TooltipProvider,
-    TooltipTrigger,
-  } from "@/components/ui/tooltip"
   import {
     Table,
     TableBody,
@@ -23,8 +17,8 @@ import {
     TableHeader,
     TableRow,
   } from "@/components/ui/table"
-import { DataTable } from "./data-table";
-import { columns } from "./columns";
+
+import SelectStatus from "@/components/SelectStatus";
   
 export enum StatusEnum {
     PENDING = "PENDING",
@@ -63,7 +57,31 @@ const Dashboard = () => {
            
         <div className="w-full ">
 
-           {applications && <DataTable columns={columns} data={applications}/>}
+           {/* {applications && <DataTable columns={columns} data={applications}/>} */}
+
+           <Table>
+            <TableCaption>A list of your recent Applications.</TableCaption>
+            <TableHeader>
+                <TableRow>
+                <TableHead className="w-[100px]">Full Name</TableHead>
+                <TableHead>Applied At</TableHead>
+                <TableHead>Application type</TableHead>
+                <TableHead className="text-right">Status</TableHead>
+                </TableRow>
+            </TableHeader>
+            <TableBody>
+                {applications?.map((el, index) => (
+                    
+                <TableRow className="cursor-pointer" onClick={()=> router.push(`/admin/dashboard/application/${el._id}`)}>
+                <TableCell className="font-medium">{el.fullname}</TableCell>
+                <TableCell>{new Date(el.uploadedAt).toLocaleDateString()}</TableCell>
+                <TableCell>Visa Apply</TableCell>
+                <TableCell className="text-right float-right"><SelectStatus data={el.status} id={el._id}/></TableCell>
+                </TableRow>
+                ))}
+            </TableBody>
+            </Table>
+
         </div>
         </section>
     )

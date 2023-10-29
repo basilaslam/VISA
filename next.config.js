@@ -7,9 +7,6 @@ const nextConfig = {
      },
     images: {
     
-    },
-    experimental:{
-        serverActions: true,
     }
 }
 

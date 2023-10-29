@@ -33,7 +33,7 @@ const Login = () => {
                 router.push("/admin/dashboard")
             }
         } catch (error: any) {
-            let message = JSON.parse(error.request.response)
+            let message = error
             toast({
                 title: 'Something went wrong',
                 description: message.message,
