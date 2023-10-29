@@ -5,9 +5,9 @@ import UploadButton from "@/components/upload"
 import axios from "axios"
 import { File } from "lucide-react"
 import { useRouter } from "next/navigation"
-import { FC, FormEvent, useState } from "react"
+import {  FormEvent, useState } from "react"
 
-export const Application: FC = () =>{
+const  Application = () => {
     const [formData, setFormData] = useState({
         fullname: "",
         date_of_birth: "",
