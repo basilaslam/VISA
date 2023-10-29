@@ -1,48 +1,52 @@
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
- 
-// This function can be marked `async` if using `await` inside
-export function middleware(request: NextRequest) {
-    const path = request.nextUrl.pathname
-    const isUserPublicPath = path === '/' || path === '/login'|| path === '/register'
-    const isAdminPublicPath = path === '/' || path === '/admin/login'
-    
-    const token = request.cookies.get("token")?.value || ''
-    const role = request.cookies.get("role")?.value || ''    
-    if(path === '/dashboard' && role === "ADMIN"){
-        return NextResponse.redirect(new URL('/admin/dashboard', request.nextUrl))
+// middleware.js 
 
+import { NextRequest, NextResponse } from "next/server"
+
+export function middleware(request:NextRequest) {
+
+    const token = request.cookies.get('token')?.value
+    const role = request.cookies.get('role')?.value
+  
+    if(!token) {
+      return redirectUser(request) 
     }
-    if(isUserPublicPath && token && role === "USER"){
-        
-        return NextResponse.redirect(new URL('/dashboard', request.nextUrl))
-    }
+    console.log(token);
     
-    if(isUserPublicPath && token && role === "ADMIN"){
-        return NextResponse.redirect(new URL('/admin/dashboard', request.nextUrl))
-    }
-    
-    if(!isUserPublicPath && !token && !role){
-        return NextResponse.redirect(new URL('/login', request.nextUrl))
+  
+    if(role === 'USER' && request.nextUrl.pathname.startsWith('/admin')) {
+      return NextResponse.redirect('/dashboard')
     }
 
-    if(token && !isAdminPublicPath && role === "ADMIN"){
-        return NextResponse.redirect(new URL('/admin/dashboard', request.nextUrl))
+    if(role === 'ADMIN' && request.nextUrl.pathname.startsWith('/login')) {
+      return NextResponse.redirect(`${request.nextUrl.origin}/admin/login`)
     }
-
-    if(path.includes('/admin/') && role !== "ADMIN" && !token){
-        return NextResponse.redirect(new URL('/login', request.nextUrl))
+    if(role === 'ADMIN' && request.nextUrl.pathname.startsWith('/admin/login')) {
+      return NextResponse.redirect(`${request.nextUrl.origin}/admin/dashboard`)
     }
     
-    
-}
-
-// See "Matching Paths" below to learn more
-export const config = {
-  matcher: [
-    '/',
-    '/dashboard/:path*',
-    '/login',
-    '/register'
-  ],
-}
+    if(role === 'ADMIN' && request.nextUrl.pathname.startsWith('/dashboard')) {
+      return NextResponse.redirect('/admin')
+    }
+  
+    return NextResponse.next()
+  
+  }
+  
+  function redirectUser(request:NextRequest) {
+    if(request.nextUrl.pathname.startsWith('/dashboard')) {
+      return NextResponse.redirect(`${request.nextUrl.origin}/login`)
+    }
+  
+    if(request.nextUrl.pathname.startsWith('/admin') && request.nextUrl.pathname !== '/admin/login') {
+      return NextResponse.redirect(`${request.nextUrl.origin}/admin/login`)
+    }
+  }
+  
+  export const config = {
+    matcher: [
+        '/',
+        '/login',
+        '/dashboard/:path*',
+        '/admin/:path*',
+      ]
+  }

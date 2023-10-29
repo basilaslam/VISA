@@ -22,7 +22,7 @@ try {
       if (!user) {
         return  NextResponse.json({message:"User does not exist"}, { status:404 });
       }
-    
+      
       if (user.role !== "USER") {
         return  NextResponse.json({message:"User does not exist"}, { status:404 });
       }
