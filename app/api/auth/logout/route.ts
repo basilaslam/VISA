@@ -22,7 +22,6 @@ export const GET = async () =>{
             expires: new Date(0) 
           })
 
-        
         return response;
     }catch (error: any){
         return NextResponse.json(
