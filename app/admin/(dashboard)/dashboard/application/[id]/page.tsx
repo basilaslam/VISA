@@ -185,7 +185,7 @@ export const Application:FC<pageProps> = ({params}) =>{
           </div>
          
          
-          {Boolean(application?.admin_pdf)&&<div className="col-span-6 sm:col-span-3">
+          {application?.admin_pdf&&<div className="col-span-6 sm:col-span-3">
             <label
               htmlFor="document"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -202,7 +202,7 @@ export const Application:FC<pageProps> = ({params}) =>{
 
 
 
-          {<div className="col-span-6 sm:col-span-3">
+          {!application?.admin_pdf&&<div className="col-span-6 sm:col-span-3">
             <label
               htmlFor="document"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
