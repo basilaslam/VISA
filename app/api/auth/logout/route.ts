@@ -9,17 +9,19 @@ export const GET = async () =>{
                 success: true
             }
         )
+        response.cookies.set("token", "", {
+            httpOnly: true,
+            sameSite: "lax",
+            path: "/",
+            expires: new Date(0) 
+          })
+        response.cookies.set("role", "", {
+            httpOnly: true,
+            sameSite: "lax",
+            path: "/",
+            expires: new Date(0) 
+          })
 
-        response.cookies.set("token", "",
-        {
-            httpOnly: true, expires: new Date(0)
-        });
-        response.cookies.set("role", "",
-        {
-            httpOnly: true, expires: new Date(0)
-        });
-        console.log(response.cookies.get("role"))
-        console.log(response.cookies.get("token"))
         
         return response;
     }catch (error: any){
