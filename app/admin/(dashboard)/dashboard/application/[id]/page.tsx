@@ -185,7 +185,7 @@ export const Application:FC<pageProps> = ({params}) =>{
           </div>
          
          
-          {application?.admin_pdf&&<div className="col-span-6 sm:col-span-3">
+          {Boolean(application?.admin_pdf)&&<div className="col-span-6 sm:col-span-3">
             <label
               htmlFor="document"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -225,7 +225,7 @@ export const Application:FC<pageProps> = ({params}) =>{
 
 
           <div className="w-full flex justify-center items-center mt-14">
-            <Button variant={"primary"} className="mx-auto font-bold"><span>Update</span></Button>
+            <Button disabled={application?.admin_pdf? true: false} variant={"primary"} className="mx-auto font-bold"><span>Update</span></Button>
           </div>
 
         </form>
