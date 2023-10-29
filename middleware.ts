@@ -10,11 +10,6 @@ export function middleware(request:NextRequest) {
     if(!token) {
       return redirectUser(request) 
     }
-    console.log(token);
-    
-    if(request.nextUrl.pathname.includes('api/auth/logout')){
-        console.log(request.cookies.get("token"), '     from middleware')
-    }
   
     if(role === 'USER' && request.nextUrl.pathname.startsWith('/admin')) {
       return NextResponse.redirect('/dashboard')

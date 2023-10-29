@@ -22,7 +22,7 @@ const Header = () => {
 
         const handleLogout = async () => {
           try {
-            let res = await axios.get('/api/auth/logout')
+            let res = await axios.get('https://visaa.netlify.app/.netlify/functions/auth/logout')
             console.log(res);
             
             logout()
