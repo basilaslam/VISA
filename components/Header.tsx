@@ -3,11 +3,14 @@ import { useEffect, useState } from "react"
 import { Button } from "./ui/button"
 import { IUser } from "@/models/user.model"
 import { useLoggedIn } from "@/lib/hooks/AuthStatus"
+import axios from "axios"
+import { useToast } from "./ui/use-toast"
 const Header = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const [isMounted, setIsMounted] = useState(false);
 
   const { isLoggedIn, logout, role } = useLoggedIn()
+  const { toast } = useToast()
 
   useEffect(() => {
     setIsMounted(true);
@@ -16,6 +19,21 @@ const Header = () => {
   if (!isMounted) {
     return null;
   }
+
+        const handleLogout = async () => {
+          try {
+            let res = await axios.get('/api/auth/logout')
+            console.log(res);
+            
+            logout()
+          } catch (error) {
+            toast({
+              title: "logout failed",
+              description: 'something went wrong while logging out',
+              variant: "destructive"
+          })
+          }
+        }
   
     return(
         <header className="bg-white dark:bg-gray-900 fixed top-0 w-full shadow-sm z-50">
@@ -68,7 +86,7 @@ const Header = () => {
           </li>
 
           <li>
-            <Button variant={"primary"} size={"sm"} className="text-gray-500 transition hover:text-gray-500/75 cursor-pointer" onClick={() => logout()}>
+            <Button variant={"primary"} size={"sm"} className="text-gray-500 transition hover:text-gray-500/75 cursor-pointer" onClick={handleLogout}>
               Logout
             </Button>
           </li>

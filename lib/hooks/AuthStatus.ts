@@ -11,9 +11,6 @@ export function useLoggedIn() {
   const { toast } = useToast()
   const logout = async () => {
     try {
-        const res = await axios.get('/api/auth/logout')
-        console.log(res);
-        
         setIsLoggedIn(false)
         if(role === "ADMIN"){
           router.push("/admin/login")
@@ -48,7 +45,9 @@ export function useLoggedIn() {
     checkLoggedIn()
   }, []);
 
-  return {isLoggedIn,
-          logout,
-        role};
+  return {
+    isLoggedIn,
+    logout,
+    role
+      };
 }
