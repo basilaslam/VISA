@@ -7,7 +7,7 @@ import { File } from "lucide-react"
 import { useRouter } from "next/navigation"
 import {  FormEvent, useState } from "react"
 
-const  Application = () => {
+export default function Application() {
     const [formData, setFormData] = useState({
         fullname: "",
         date_of_birth: "",
@@ -176,4 +176,3 @@ console.log(error);
     )
 } 
 
-export default Application
