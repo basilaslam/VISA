@@ -54,7 +54,7 @@ const Dashboard = () => {
            
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 2xl:grid-cols-9 gap-10">
         {applications&&applications.map((el, index)=>(
-                <Card key={index} className="hover:cursor-pointer hover:border-red-600">
+                <Card key={index} className="hover:cursor-pointer hover:border-red-600" onClick={()=> router.push(`/dashboard/application/${el._id}`)}>
                 <CardContent className="p-0 pt-2">
                     <Image className="mx-auto" src={form} width={100} height={100} alt=""/>
                 </CardContent>

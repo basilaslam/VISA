@@ -13,13 +13,14 @@ export const PATCH = async(request: NextRequest) => {
         }
         console.log("2")
         const { _id, field, value } = await request.json()
-        console.log("3")
+        console.log("3", _id)
 
         const updateQuery = { [field]: value };
-        console.log(updateQuery)
 
        const updatedApplication = await Application.updateOne({_id},updateQuery)
         console.log(updatedApplication)
+        console.log("4")
+
        return NextResponse.json({ Message: "Application Updated successfully" },{status:200})
 
 

@@ -9,7 +9,10 @@ export function middleware(request: NextRequest) {
     
     const token = request.cookies.get("token")?.value || ''
     const role = request.cookies.get("role")?.value || ''    
-    
+    if(path === '/dashboard' && role === "ADMIN"){
+        return NextResponse.redirect(new URL('/admin/dashboard', request.nextUrl))
+
+    }
     if(isUserPublicPath && token && role === "USER"){
         
         return NextResponse.redirect(new URL('/dashboard', request.nextUrl))

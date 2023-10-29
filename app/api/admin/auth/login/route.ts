@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import bcrypt from 'bcrypt'
+import  bcrypt from 'bcrypt'
 import User, { IUser } from "@/models/user.model";
 import connect from "@/lib/mongodb";
 import { generateAccessAndRefreshTokens } from "./core";

@@ -3,8 +3,8 @@ import { useSearchParams } from "next/navigation"
 import { NextRequest, NextResponse } from "next/server"
 
 export const GET = async(request: NextRequest, route: { params: { id: string } }) => {
-console.log('hi');
-
+    console.log(request);
+    
     try {
 
         const id = route.params.id

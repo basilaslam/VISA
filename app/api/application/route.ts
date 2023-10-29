@@ -11,7 +11,6 @@ export const GET = async(request: NextRequest) => {
     try {
         const { _id } = getDataFromToken(request)
         let applications = await Application.find({uploadedBy: _id})
-       console.log(request.cookies.get('role'))
         return NextResponse.json(
             {
                 message: "Applications successfully loaded",

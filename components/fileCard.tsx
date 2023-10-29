@@ -12,7 +12,7 @@ import {
     return(
             <Card className="hover:cursor-pointer hover:border-red-600" onClick={() => window.open(url)}>
             <CardContent className="p-0 pt-2">
-                <Image className="mx-auto" src={form} width={100} height={100} alt=""/>
+                <Image className="mx-auto h-12 w-12 md:w-28 md:h-28 " src={form} alt=""/>
             </CardContent>
             <CardFooter className="py-3 px-0">
                 <h4 className="my-auto mx-2 font-medium text-xs w-full text-center truncate">Visa Application</h4>

@@ -35,7 +35,7 @@ export const Application:FC<pageProps> = ({params}) =>{
       const getDetails = async() => {
         try {
           
-          const res = await axios.get<SingleApplicationApiResponse>(`/api/admin/application/${params.id}`)
+          const res = await axios.get<SingleApplicationApiResponse>(`/api/application/${params.id}`)
           
           setApplication(res.data.data)
           
@@ -62,16 +62,18 @@ export const Application:FC<pageProps> = ({params}) =>{
             let form = {
                 field: 'admin_pdf',
                 value: pdf.url,
-                id: application?._id
+                _id: application?._id
             }
 
+            
             
             
             let res = await axios.patch('/api/admin/application/edit', form)
             
             if(res.status === 200){
-                router.push("/dashboard")
+                router.refresh()
             }
+
         } catch (error: any) {
           console.log(error);
 
@@ -182,7 +184,6 @@ export const Application:FC<pageProps> = ({params}) =>{
             </div>
           </div>
          
-         {application?.admin_pdf}
          
           {Boolean(application?.admin_pdf)&&<div className="col-span-6 sm:col-span-3">
             <label
@@ -216,7 +217,7 @@ export const Application:FC<pageProps> = ({params}) =>{
                 <div className="bg-gray-200 px-2 text-sm my-auto border-r-2 border-gray-700">
                 <File className=" h-5 w-5"/>
                 </div>
-                <h3 className="font-medium text-sm bg-gray-200 px-2 my-auto truncate">{pdf?.name}</h3>
+                <h3 className="font-medium text-sm bg-gray-200 px-2 my-auto truncate">Visa Approval</h3>
             </div>}
             
             </div>
