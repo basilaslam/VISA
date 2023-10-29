@@ -71,7 +71,13 @@ export const Application:FC<pageProps> = ({params}) =>{
             let res = await axios.patch('/api/admin/application/edit', form)
             
             if(res.status === 200){
-                router.refresh()
+              toast({
+                title: 'Document uploaded successfully',
+                description: "Approval document uploaded successfully",
+                variant: "default"
+            })
+
+            router.push("/admin/dashboard")
             }
 
         } catch (error: any) {
