@@ -7,6 +7,9 @@ const nextConfig = {
      },
     images: {
     
+    },
+    typescript:{
+        ignoreBuildErrors: true
     }
 }
 

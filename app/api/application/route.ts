@@ -18,7 +18,12 @@ export const GET = async(request: NextRequest) => {
             },
             {status: 200})
     } catch (error) {
-        
+        return NextResponse.json(
+            {
+                error: "Somethin went wrong",
+                
+            },
+            {status: 500})
     }
 
     
