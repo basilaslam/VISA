@@ -25,7 +25,7 @@ export function middleware(request:NextRequest) {
     }
     
     if(role === 'ADMIN' && request.nextUrl.pathname.startsWith('/dashboard')) {
-      return NextResponse.redirect('/admin')
+      return NextResponse.redirect('/admin/dashboard')
     }
   
     return NextResponse.next()
